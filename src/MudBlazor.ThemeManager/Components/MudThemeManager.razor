@@ -29,7 +29,7 @@
             <MudSlider Step="1" Min="0" Max="25" T="int" Value="@Theme.DefaultElevation" ValueChanged="OnDefaultElevationAsync"><MudText Typo="Typo.body2">Default Elevation: <b>@($"{@Theme.DefaultElevation}")</b></MudText></MudSlider>
         </div>
         <div class="pt-6">
-            <MudText Typo="Typo.body2" GutterBottom="true" Class="mx-4 mb-4"><b>Theme Colors</b></MudText>
+            <MudText Typo="Typo.body2" GutterBottom="true" Class="mx-4 mb-4"><b>@(_isDarkModeState.Value ? "Dark" : "Light") Theme Colors</b></MudText>
             <MudThemeManagerColorItem Name="Primary" ThemeColor="@_currentPalette.Primary" ColorType="ThemePaletteColor.Primary" ColorPickerView="ColorPickerView" />
             <MudThemeManagerColorItem Name="Secondary" ThemeColor="@_currentPalette.Secondary" ColorType="ThemePaletteColor.Secondary" ColorPickerView="ColorPickerView" />
             <MudThemeManagerColorItem Name="Tertiary" ThemeColor="@_currentPalette.Tertiary" ColorType="ThemePaletteColor.Tertiary" ColorPickerView="ColorPickerView" />
@@ -67,4 +67,29 @@
         </div>
     </MudDrawer>
     <MudOverlay @bind-Visible:get="_openState.Value" @bind-Visible:set="_openState.SetValueAsync" OnClick="@UpdateOpenValueAsync" DarkBackground="false" />
+    
+    
+    <div style="@($"right: {(_openState.Value ? "312px" : "0px")};top:30%")" class="mud-thememanager-button rounded-l px-3 pt-2 pb-1" @onclick="@(() => _openState.SetValueAsync(!Open))">
+        <MudTooltip Arrow="true" Placement="Placement.Left" Text="@(_openState.Value ? "Hide Theme Manager" : "Show Theme Manager")">
+            <MudIcon Icon="@(_openState.Value ? @Icons.Material.Filled.ArrowRight : @Icons.Material.Filled.ArrowLeft)"/>
+        </MudTooltip>
+    </div>
+
+    <div style="@($"right: {(_openState.Value ? "312px" : "0px")};top:40%")" class="mud-thememanager-button rounded-l px-3 pt-2 pb-1" @onclick="@(() => _isDarkModeState.SetValueAsync(!IsDarkMode))">
+        <MudTooltip Arrow="true" Placement="Placement.Left" Text="@(_isDarkModeState.Value ? "Switch to Light Mode" : "Switch to Dark Mode")">
+            <MudIcon Icon="@(_isDarkModeState.Value ? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" />
+        </MudTooltip>
+    </div>
+    
+    <div style="@($"right: {(_openState.Value ? "312px" : "0px")};top:50%")" class="mud-thememanager-button rounded-l px-3 pt-2 pb-1" @onclick="@(ExportTheme)">
+        <MudTooltip Text="Export Theme">
+            <MudIcon Icon="@Icons.Material.Filled.SaveAs" />
+        </MudTooltip>
+    </div>
+    
+    <div style="@($"right: {(_openState.Value ? "312px" : "0px")};top:60%")" class="mud-thememanager-button rounded-l px-3 pt-2 pb-1" @onclick="@(ExportTheme)">
+        <MudTooltip Text="Revert to Default Theme">
+            <MudIcon Icon="@Icons.Material.Filled.Warning" />
+        </MudTooltip>
+    </div>
 </CascadingValue>
