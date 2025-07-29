@@ -27,5 +27,6 @@ public enum ThemePaletteColor
     TextDisabled,
     ActionDefault,
     ActionDisabled,
-    ActionDisabledBackground
+    ActionDisabledBackground,
+    Skeleton
 }
