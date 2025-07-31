@@ -1,8 +1,0 @@
-﻿.mud-thememanager-button {
-    position: fixed;
-    box-shadow: 1px 1px 10px var(--mud-palette-primary);
-    color: #FFFFFF;
-    background-color: var(--mud-palette-primary);
-    cursor: pointer;
-    z-index: 17000;
-}

@@ -1,11 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor.State;
 using MudBlazor.ThemeManager.Extensions;
+using System.Collections;
+
 
 namespace MudBlazor.ThemeManager;
 
 public partial class MudThemeManager : ComponentBaseWithState
 {
+    [Inject]
+    private IDialogService DialogService { get; set; }
+    
     private static readonly PaletteLight DefaultPaletteLight = new();
     private static readonly PaletteDark DefaultPaletteDark = new();
     private readonly ParameterState<bool> _openState;
@@ -28,7 +37,7 @@ public partial class MudThemeManager : ComponentBaseWithState
         _currentPalette = GetPalette();
     }
 
-    public string ThemePresets { get; set; } = "Not Implemented";
+    public ThemePreset? SelectedThemePreset { get; set; } = null;
 
     [Parameter] public bool Open { get; set; } = true;
 
@@ -62,10 +71,85 @@ public partial class MudThemeManager : ComponentBaseWithState
         _currentPaletteLight = Theme.PaletteLight.DeepClone();
         _currentPaletteDark = Theme.PaletteDark.DeepClone();
     }
+    
+    private bool _exportVisible;
+    private readonly DialogOptions _exportDialogOptions = new() { FullWidth = true };
+
+    private void ToggleExportDialog() => _exportVisible = !_exportVisible;
+
+private string _jsonExport = string.Empty;
+private string _cSharpExport = string.Empty;
+
+private async Task ApplyThemePreset()
+{
+    if (SelectedThemePreset != null)
+    {
+        bool? result = await DialogService.ShowMessageBox("Notice", $"Are you sure you want to override the current theme with the {SelectedThemePreset.PresetName} theme?", yesText: "Apply Theme", cancelText: "Cancel");
+        if (result.HasValue && result.Value)
+        {
+            Theme = SelectedThemePreset.Theme;
+            await ThemeChanged.InvokeAsync(Theme);
+            SelectedThemePreset = null;
+            StateHasChanged();
+        }
+    }
+}
 
     private void ExportTheme()
     {
-        
+        ToggleExportDialog();
+        _jsonExport = System.Text.Json.JsonSerializer.Serialize(_customTheme);
+    }
+    
+    private async Task RevertTheme()
+    {
+        bool? result = await DialogService.ShowMessageBox("Notice", "Are you sure you want to revert this theme to the default?", yesText: "Revert Changes", cancelText: "Cancel");
+        if (result.HasValue && result.Value)
+        {
+            _customTheme = Theme.DeepClone();
+            _currentPaletteLight = DefaultPaletteLight.DeepClone();
+            _currentPaletteDark = DefaultPaletteDark.DeepClone();
+
+            GetPalette();
+            StateHasChanged();
+        }
+    }
+    
+    private async Task ImportTheme(IBrowserFile file)
+    {
+        try
+        {
+            if (file != null)
+            {
+                bool? result = await DialogService.ShowMessageBox("Notice", "Are you sure you want to override the current theme with the imported one?", yesText: "Import Theme", cancelText: "Cancel");
+                if (result.HasValue && result.Value)
+                {
+                    const long maxFileSize = 1024 * 1024 * 10; // 10 MB limit
+                    using var stream = file.OpenReadStream(maxFileSize);
+                    using var reader = new StreamReader(stream, Encoding.UTF8);
+                    string fileContents = await reader.ReadToEndAsync();
+                
+                    _customTheme = JsonSerializer.Deserialize<MudTheme>(fileContents);
+                    
+                    UpdateCustomTheme();
+                    
+                    if (_isDarkModeState.Value)
+                    {
+                        _currentPaletteDark = _customTheme.PaletteDark;
+                        Theme.PaletteDark = _customTheme.PaletteDark;
+                    }
+                    else
+                    {
+                        _currentPaletteLight = _customTheme.PaletteLight;
+                        Theme.PaletteLight = _customTheme.PaletteLight;
+                    }
+                    
+                    await UpdateThemeChangedAsync();
+                }
+            }
+        } catch (Exception ex)
+        {
+        }
     }
     
     public string FontFamily { get; set; } = "Roboto";
@@ -74,6 +158,8 @@ public partial class MudThemeManager : ComponentBaseWithState
     private int DrawerMiniWidthRight = 56;
     private int DrawerMiniWidthLeft = 56;
     private int AppbarHeight = 64;
+
+    private ZIndex _customZIndex = new();
     
     public Task UpdatePalette(ThemeUpdatedValue value)
     {
@@ -194,6 +280,134 @@ public partial class MudThemeManager : ComponentBaseWithState
     }
 
     private Task UpdateOpenValueAsync() => _openState.SetValueAsync(false);
+    
+        public static string GenerateCSharpCode(object obj, string varName = "obj", int indentLevel = 0)
+        {
+            if (obj == null) return "null";
+
+            Type type = obj.GetType();
+            var indent = new string(' ', indentLevel * 4);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{indent}var {varName} = new {type.Name}");
+            sb.AppendLine($"{indent}{{");
+
+            foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var value = prop.GetValue(obj);
+                string valueStr = FormatValue(value, prop.PropertyType, indentLevel + 1);
+                sb.AppendLine($"{indent}    {prop.Name} = {valueStr},");
+            }
+
+            sb.AppendLine($"{indent}}};");
+            return sb.ToString();
+        }
+
+        private static string FormatValue(object value, Type type, int indentLevel)
+        {
+            if (value == null) return "null";
+
+            if (type == typeof(string)) return $"\"{value}\"";
+            if (type == typeof(char)) return $"'{value}'";
+            if (type == typeof(bool)) return value.ToString().ToLower();
+            if (type.IsPrimitive || type.IsEnum) return value.ToString();
+
+            if (typeof(IEnumerable).IsAssignableFrom(type) && type != typeof(string))
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine("new []");
+                sb.AppendLine(new string(' ', indentLevel * 4) + "{");
+
+                foreach (var item in (IEnumerable)value)
+                {
+                    sb.AppendLine(new string(' ', (indentLevel + 1) * 4) + FormatValue(item, item.GetType(), indentLevel + 1) + ",");
+                }
+
+                sb.Append(new string(' ', indentLevel * 4) + "}");
+                return sb.ToString();
+            }
+
+            // Nested object
+            return GenerateCSharpCode(value, "", indentLevel).TrimEnd(';');
+        }
+
+    
+    private Task OnDrawerZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        _customZIndex.Drawer = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnPopoverZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        _customZIndex.Popover = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnAppBarZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        _customZIndex.AppBar = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnDialogZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        _customZIndex.Dialog = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnSnackbarZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        _customZIndex.Snackbar = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnTooltipZIndexAsync(int value)
+    {
+        if (Theme is null || _customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        _customZIndex.Tooltip = value;
+        Theme.ZIndex = _customZIndex;
+
+        return UpdateThemeChangedAsync();
+    }
 
     private async Task UpdateThemeChangedAsync()
     {
@@ -363,20 +577,14 @@ public partial class MudThemeManager : ComponentBaseWithState
         return UpdateThemeChangedAsync();
     }
 
-    private Task OnDefaultElevationAsync(int value)
+    private Task OnElevationAsync(int index, string value)
     {
         if (Theme is null || _customTheme is null)
         {
             return Task.CompletedTask;
         }
 
-        //Theme.Shadows.DefaultElevation = value;
-        var newDefaultElevation = _customTheme.Shadows;
-
-        string newElevation = newDefaultElevation.Elevation[value];
-        newDefaultElevation.Elevation[1] = newElevation;
-
-        _customTheme.Shadows.Elevation[1] = newElevation;
+        _customTheme.Shadows.Elevation[index] = value;
         Theme = _customTheme;
 
         return UpdateThemeChangedAsync();
