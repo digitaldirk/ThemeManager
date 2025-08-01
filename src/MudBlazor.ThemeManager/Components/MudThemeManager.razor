@@ -95,17 +95,12 @@
                     <MudText Typo="Typo.h6">Shadows (Elevation)</MudText>
                 </TitleContent>
                 <ChildContent>
-                  <MudGrid>
-                  @for (int i = 0; i < _customTheme.Shadows.Elevation.Length - 1; i++)
+                  <MudGrid Spacing="2">
+                  @for (int i = 0; i < _customTheme.Shadows.Elevation.Length; i++)
                   {
                       var index = i;
                       <MudItem xs="12">
                           <MudTextField AutoGrow="true" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate="true" Value="_customTheme.Shadows.Elevation[index]" ValueChanged="@(async (string val) => await OnElevationAsync(index, val))" Label="@($"Elevation {index}")" FullWidth="true" />
-                          
-                          <style>
-
-                          </style>
-
                       </MudItem>
                   }
                   </MudGrid>
