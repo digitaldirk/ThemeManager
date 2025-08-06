@@ -1,6 +1,13 @@
 ﻿@page "/LayoutProperties"
 
-    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@ToggleDrawer">Open Drawers</MudButton>
+<MudPaper Class="pa-2">
+<MudStack Spacing="4" Row="true" AlignItems="AlignItems.Center">
+    <MudText Typo="Typo.h6">Resources:</MudText>
+    <MudLink Href="https://www.mudblazor.com/customization/default-theme#layoutproperties" Target="_blank">Default values</MudLink>
+</MudStack>
+</MudPaper>
+
+<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@ToggleDrawer">Open Drawers</MudButton>
 
 <MudText Typo="Typo.h6">Drawers</MudText>
 <MudPaper Height="200px" Width="800px" Style="overflow:hidden; position:relative;">
