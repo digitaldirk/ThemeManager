@@ -158,6 +158,13 @@ private async Task ApplyThemePreset()
     private int DrawerMiniWidthRight = 56;
     private int DrawerMiniWidthLeft = 56;
     private int AppbarHeight = 64;
+    private int ExtraSmall = 0;
+    private int Small = 600;
+    private int Medium = 960;
+    private int Large = 1280;
+    private int ExtraLarge = 1920;
+    private int ExtraExtraLarge = 2560;
+    
 
     private ZIndex _customZIndex = new();
     
@@ -171,11 +178,18 @@ private async Task ApplyThemePreset()
         }
 
         Palette newPalette = _isDarkModeState.Value ? _customTheme.PaletteDark : _customTheme.PaletteLight;
-
+        
+        
         switch (value.ThemePaletteColor)
         {
             case ThemePaletteColor.Primary:
                 newPalette.Primary = value.ColorStringValue;
+                break;
+            case ThemePaletteColor.PrimaryLighten:
+                newPalette.PrimaryLighten = value.ColorStringValue;
+                break;
+            case ThemePaletteColor.PrimaryDarken:
+                newPalette.PrimaryDarken = value.ColorStringValue;
                 break;
             case ThemePaletteColor.Secondary:
                 newPalette.Secondary = value.ColorStringValue;
@@ -588,6 +602,21 @@ private async Task ApplyThemePreset()
         Theme = _customTheme;
 
         return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnExtraSmallAsync(int value)
+    {
+        // if (Theme is null || _customTheme is null)
+        // { 
+        //     return Task.CompletedTask;
+        // }
+        //
+        // ExtraSmall = value;
+        // _customTheme.
+        // Theme = _customTheme;
+        //
+        // return UpdateThemeChangedAsync();
+        return null;
     }
 
     // private Task OnAppBarElevationAsync(int value)

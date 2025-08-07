@@ -3,6 +3,8 @@
 public enum ThemePaletteColor
 {
     Primary,
+    PrimaryLighten,
+    PrimaryDarken,
     Secondary,
     Tertiary,
     Info,
