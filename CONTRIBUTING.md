@@ -1,12 +1,14 @@
 # Contributing to MudBlazor ThemeManager
 
-Thank you for your interest in contributing to MudBlazor ThemeManager! We welcome contributions from the community and appreciate your efforts to improve this project.
+Thank you for your interest in contributing to MudBlazor ThemeManager! We welcome contributions from the community and
+appreciate your efforts to improve this project.
 
 ## How to Contribute
 
 ### 1. Reporting Issues
 
-If you encounter a bug or have a feature request, please create an issue on GitHub. When reporting an issue, please include:
+If you encounter a bug or have a feature request, please create an issue on GitHub. When reporting an issue, please
+include:
 
 - A clear and descriptive title.
 - A detailed description of the problem or suggestion.
@@ -39,7 +41,8 @@ git checkout -b feature/your-feature-name
 
 ### 5. Make Your Changes
 
-Make your changes to the codebase. Ensure that your changes are well-documented and include appropriate tests where applicable.
+Make your changes to the codebase. Ensure that your changes are well-documented and include appropriate tests where
+applicable.
 
 ### 6. Commit Your Changes
 
@@ -70,15 +73,18 @@ Navigate to the original repository and create a pull request:
 
 ## Code of Conduct
 
-This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to the project maintainers.
+This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are
+expected to uphold this code. Please report unacceptable behavior to the project maintainers.
 
 ## Style Guide
 
-Please follow the project's coding style and conventions. Consistent code style helps maintain readability and ease of maintenance.
+Please follow the project's coding style and conventions. Consistent code style helps maintain readability and ease of
+maintenance.
 
 ## License
 
-By contributing to MudBlazor ThemeManager, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing to MudBlazor ThemeManager, you agree that your contributions will be licensed under
+the [MIT License](LICENSE).
 
 ## Getting Help
 

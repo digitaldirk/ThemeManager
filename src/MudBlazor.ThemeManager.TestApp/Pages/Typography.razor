@@ -1,31 +1,59 @@
 ﻿@page "/Typography"
 @using MudBlazor.ThemeManager.TestApp.Components
 <MudPaper Class="pa-2 mb-4">
-<MudStack Spacing="4"  Row="true" AlignItems="AlignItems.Center">
-    <MudText Typo="Typo.h6">Resources:</MudText>
-    <MudLink Href="https://www.mudblazor.com/customization/typography" Target="_blank">Documentation</MudLink>
-    <MudLink Href="https://www.mudblazor.com/components/typography" Target="_blank">MudText Component</MudLink>
-    <MudLink Href="https://www.mudblazor.com/customization/default-theme#mudtheme-typography" Target="_blank">Default values</MudLink>
-</MudStack>
+    <MudStack Spacing="4" Row="true" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h6">Resources:</MudText>
+        <MudLink Href="https://www.mudblazor.com/customization/typography" Target="_blank">Documentation</MudLink>
+        <MudLink Href="https://www.mudblazor.com/components/typography" Target="_blank">MudText Component</MudLink>
+        <MudLink Href="https://www.mudblazor.com/customization/default-theme#mudtheme-typography" Target="_blank">
+            Default values
+        </MudLink>
+    </MudStack>
 </MudPaper>
 
 <MudStack Spacing="1">
-    <MudText Typo="Typo.h1"><b>h1:</b> Heading <TypographyDefaultDisplay Typography="@(new H1Typography())"/></MudText>
-    <MudText Typo="Typo.h2"><b>h2:</b> Heading <TypographyDefaultDisplay Typography="@(new H2Typography())"/></MudText>
-    <MudText Typo="Typo.h3"><b>h3:</b> Heading <TypographyDefaultDisplay Typography="@(new H3Typography())"/></MudText>
-    <MudText Typo="Typo.h4"><b>h4:</b> Heading <TypographyDefaultDisplay Typography="@(new H4Typography())"/></MudText>
-    <MudText Typo="Typo.h5"><b>h5:</b> Heading <TypographyDefaultDisplay Typography="@(new H5Typography())"/></MudText>
-    <MudText Typo="Typo.h6"><b>h6:</b> Heading <TypographyDefaultDisplay Typography="@(new H6Typography())"/></MudText>
+    <MudText Typo="Typo.h1"><b>h1:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H1Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.h2"><b>h2:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H2Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.h3"><b>h3:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H3Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.h4"><b>h4:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H4Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.h5"><b>h5:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H5Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.h6"><b>h6:</b> Heading
+        <TypographyDefaultDisplay Typography="@(new H6Typography())"/>
+    </MudText>
     <br/>
-    <MudText Typo="Typo.subtitle1"><b>subtitle1:</b> @_testText <TypographyDefaultDisplay Typography="@(new Subtitle1Typography())"/></MudText>
-    <MudText Typo="Typo.subtitle2"><b>subtitle2:</b> @_testText <TypographyDefaultDisplay Typography="@(new Subtitle2Typography())"/></MudText>
+    <MudText Typo="Typo.subtitle1"><b>subtitle1:</b> @_testText <TypographyDefaultDisplay
+            Typography="@(new Subtitle1Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.subtitle2"><b>subtitle2:</b> @_testText <TypographyDefaultDisplay
+            Typography="@(new Subtitle2Typography())"/>
+    </MudText>
     <br/>
-    <MudText Typo="Typo.body1"><b>body1:</b> @_testText <TypographyDefaultDisplay Typography="@(new Body1Typography())"/></MudText>
-    <MudText Typo="Typo.body2"><b>body2:</b> @_testText <TypographyDefaultDisplay Typography="@(new Body2Typography())"/></MudText>
+    <MudText Typo="Typo.body1"><b>body1:</b> @_testText <TypographyDefaultDisplay
+            Typography="@(new Body1Typography())"/>
+    </MudText>
+    <MudText Typo="Typo.body2"><b>body2:</b> @_testText <TypographyDefaultDisplay
+            Typography="@(new Body2Typography())"/>
+    </MudText>
     <br/>
-    <MudText Typo="Typo.button"><b>button:</b> BUTTON TEXT <TypographyDefaultDisplay Typography="@(new ButtonTypography())"/></MudText>
-    <MudText Typo="Typo.caption"><b>caption:</b> caption text <TypographyDefaultDisplay Typography="@(new CaptionTypography())"/></MudText>
-    <MudText Typo="Typo.overline"><b>overline:</b> OVERLINE TEXT <TypographyDefaultDisplay Typography="@(new OverlineTypography())"/></MudText>
+    <MudText Typo="Typo.button"><b>button:</b> BUTTON TEXT
+        <TypographyDefaultDisplay Typography="@(new ButtonTypography())"/>
+    </MudText>
+    <MudText Typo="Typo.caption"><b>caption:</b> caption text
+        <TypographyDefaultDisplay Typography="@(new CaptionTypography())"/>
+    </MudText>
+    <MudText Typo="Typo.overline"><b>overline:</b> OVERLINE TEXT
+        <TypographyDefaultDisplay Typography="@(new OverlineTypography())"/>
+    </MudText>
     <br/>
     <MudText Typo="Typo.button" HtmlTag="h3">button typo but the element is h3</MudText>
     <MudText Typo="Typo.body2" HtmlTag="strong">body2 typo but the element is strong</MudText>

@@ -1,22 +1,26 @@
 ﻿@page "/LayoutProperties"
 
 <MudPaper Class="pa-2 mb-4">
-<MudStack Spacing="4" Row="true" AlignItems="AlignItems.Center">
-    <MudText Typo="Typo.h6">Resources:</MudText>
-    <MudLink Href="https://www.mudblazor.com/customization/default-theme#layoutproperties" Target="_blank">Default values</MudLink>
-</MudStack>
+    <MudStack Spacing="4" Row="true" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h6">Resources:</MudText>
+        <MudLink Href="https://www.mudblazor.com/customization/default-theme#layoutproperties" Target="_blank">Default
+            values
+        </MudLink>
+    </MudStack>
 </MudPaper>
 
 <MudText Typo="Typo.h6">Mini Drawers</MudText>
 <MudPaper Height="200px" Width="800px" Style="overflow:hidden; position:relative;">
-        <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Breakpoint="Breakpoint.None">
-            <MudNavMenu>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Store">Store</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Library</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group">Community</MudNavLink>
-            </MudNavMenu>
-        </MudDrawer>
-    <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Breakpoint="Breakpoint.None" Anchor="Anchor.End">
+    <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true"
+               Breakpoint="Breakpoint.None">
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Store">Store</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Library</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group">Community</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true"
+               Breakpoint="Breakpoint.None" Anchor="Anchor.End">
         <MudNavMenu>
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Store">Store</MudNavLink>
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Library</MudNavLink>
@@ -24,7 +28,8 @@
         </MudNavMenu>
     </MudDrawer>
 </MudPaper>
+
 @code
-{ 
-    private bool _open = false;
+{
+    private bool _open;
 }

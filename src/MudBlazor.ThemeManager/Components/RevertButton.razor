@@ -1,13 +1,14 @@
-﻿<MudTextField @bind-Value="PrimaryColor" Label="Primary Color" />
+﻿<MudTextField @bind-Value="PrimaryColor" Label="Primary Color"/>
 
 <MudIconButton Icon="@Icons.Material.Filled.Replay"
                Variant="Variant.Filled"
                Color="Color.Primary"
-               OnClick="RevertPrimaryColor" />
+               OnClick="RevertPrimaryColor"/>
 
 @code {
+
     // Default value for the property
-    private string DefaultPrimaryColor = "#1976d2"; // Example default
+    private readonly string DefaultPrimaryColor = "#1976d2"; // Example default
 
     // The property being edited
     private string PrimaryColor = "#1976d2";
@@ -16,4 +17,5 @@
     {
         PrimaryColor = DefaultPrimaryColor;
     }
+
 }
