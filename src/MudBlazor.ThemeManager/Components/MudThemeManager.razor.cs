@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor.State;
 using MudBlazor.ThemeManager.Extensions;
 using System.Collections;
+using MudBlazor.Utilities;
 
 
 namespace MudBlazor.ThemeManager;
@@ -164,6 +165,31 @@ private async Task ApplyThemePreset()
     private int Large = 1280;
     private int ExtraLarge = 1920;
     private int ExtraExtraLarge = 2560;
+    
+    private bool _colorPickerOpen = false;
+    
+    private MudColor? ThemeColor { get; set; }
+    private ThemePaletteColor ColorType { get; set; }
+    private MudColor? _setupPalleteColor { get; set; }
+    private void SetupColorPicker(MudColor colorValue, ThemePaletteColor colorType)
+    {
+        _setupPalleteColor = colorValue;
+        ColorType = colorType;
+        _colorPickerOpen = true;
+    }
+    
+    public Task UpdateColor(MudColor value)
+    {
+        _setupPalleteColor = value;
+        ThemeColor = value;
+        var newPaletteColor = new ThemeUpdatedValue
+        {
+            ColorStringValue = value.ToString(),
+            ThemePaletteColor = ColorType
+        };
+
+        return UpdatePalette(newPaletteColor);
+    }
     
 
     private ZIndex _customZIndex = new();
