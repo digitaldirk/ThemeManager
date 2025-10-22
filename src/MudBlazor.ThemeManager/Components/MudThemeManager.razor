@@ -2,6 +2,10 @@
 @using Microsoft.AspNetCore.Components.Forms
 @inherits ComponentBaseWithState
 
+@* Keeps MudThemeManager as default theme *@
+<MudThemeProvider IsDarkMode="@_isDarkModeState.Value" Theme="SeperateTheme"/>
+
+
 <CascadingValue Value="this">
     <MudDrawer Class="rounded-l-xl pa-2 border-solid border-l-4 border-y-4 mud-border-Background-Gray"
                Style="backdrop-filter: blur(10px); -webkit-backdrop-filter:blur(10px); background-color: rgba(var(--mud-palette-background), 0.2);z-index: 10000;height: 95vh;position: absolute; top: 2.5vh"
@@ -253,7 +257,7 @@
         <MudIconButton
             Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:7.5%;position: fixed;z-index: 10000;")"
             Class="rounded-l-lg rounded-0 border-solid border-l-2 border-y-2 mud-border-Background-Gray"
-            OnClick="@(() => _openState.SetValueAsync(!_openState.Value))"
+            OnClick="@ToggleThemeManager"
             Icon="@(_openState.Value ? Icons.Material.Filled.ArrowRight : Icons.Material.Filled.ArrowLeft)"
             Variant="Variant.Filled" Color="Color.Primary"/>
     </MudTooltip>
@@ -296,9 +300,9 @@
     @if (_openState.Value && _colorPickerOpen)
     {
         <MudPaper Elevation="0"
-                  Class="rounded-l-lg border-solid border-l-4 border-y-4 mud-border-Background-Gray ma-0 pa-0"
+                  Class="rounded-l-lg rounded-0 border-solid border-l-4 border-y-4 mud-border-Background-Gray ma-0 pa-0 px-2"
                   Style="right:312px;bottom:5%;position:fixed;z-index: 10000;">
-            <MudStack Row="true" AlignItems="AlignItems.Center" Class="px-2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
                 @ColorType.ToString()
                 <MudTooltip Text="Reset value to default">
                     <MudIconButton
@@ -319,9 +323,13 @@
                                        Icon="@Icons.Material.TwoTone.Nightlight"/>
                     </MudTooltip>
                 }
+                
+                <MudTooltip Text="Close color picker">
+                    <MudIconButton OnClick="@(() => _colorPickerOpen = false)" Icon="@Icons.Material.Filled.IndeterminateCheckBox"/>
+                </MudTooltip>
 
             </MudStack>
-            <MudColorPicker Value="_setupPalleteColor" ValueChanged="UpdateColor" PickerVariant="PickerVariant.Static"
+            <MudColorPicker DragEffect="false" Elevation="0" Value="_setupPalleteColor" ValueChanged="UpdateColor" PickerVariant="PickerVariant.Static"
                             ColorPickerView="ColorPickerView"/>
         </MudPaper>
     }

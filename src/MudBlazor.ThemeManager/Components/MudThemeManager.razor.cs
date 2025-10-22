@@ -25,6 +25,9 @@ public partial class MudThemeManager : ComponentBaseWithState
 
     private PaletteLight? _currentPaletteLight;
     private MudTheme? _customTheme;
+    
+    // Keeps MudThemeManager at default theme
+    private MudTheme SeperateTheme = new();
 
 
     private readonly ZIndex _customZIndex = new();
@@ -89,6 +92,12 @@ public partial class MudThemeManager : ComponentBaseWithState
         _customTheme = Theme.DeepClone();
         _currentPaletteLight = Theme.PaletteLight.DeepClone();
         _currentPaletteDark = Theme.PaletteDark.DeepClone();
+    }
+
+    private void ToggleThemeManager()
+    {
+        _openState.SetValueAsync(!_openState.Value);
+        _colorPickerOpen = false;
     }
 
     private void ToggleExportDialog()
