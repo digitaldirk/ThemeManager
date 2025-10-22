@@ -47,7 +47,7 @@ public partial class MudThemeManager : ComponentBaseWithState
 
     [Parameter]
     public EventCallback<ThemeManagerTheme> ThemeChanged { get; set; }
-
+    
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -64,6 +64,11 @@ public partial class MudThemeManager : ComponentBaseWithState
         _currentPaletteDark = Theme.Theme.PaletteDark.DeepClone();
     }
 
+    private void ExportTheme()
+    {
+        
+    }
+    
     public Task UpdatePalette(ThemeUpdatedValue value)
     {
         UpdateCustomTheme();

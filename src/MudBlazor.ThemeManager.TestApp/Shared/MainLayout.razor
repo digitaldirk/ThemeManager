@@ -8,8 +8,8 @@
 <MudLayout>
     <MudAppBar Elevation="_themeManager.AppBarElevation">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@(_isDarkMode? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())" />
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.DarkMode" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())" Edge="Edge.End" />
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="_themeManager.DrawerClipMode" Elevation="_themeManager.DrawerElevation">
         <MudText Typo="Typo.h6" Class="px-4 pt-2">Theme Manager</MudText>
@@ -21,8 +21,7 @@
             @Body
         </MudContainer>
     </MudMainContent>
-    <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
-    <MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager" ThemeChanged="UpdateTheme" IsDarkMode="@_isDarkMode" />
+    <MudThemeManager Theme="_themeManager" ThemeChanged="UpdateTheme" IsDarkMode="@_isDarkMode" />
 </MudLayout>
 
 @code {
@@ -31,16 +30,10 @@
 
     private bool _isDarkMode;
     private bool _drawerOpen = true;
-    private bool _themeManagerOpen;
 
     private void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
-    }
-
-    private void OpenThemeManager(bool value)
-    {
-        _themeManagerOpen = value;
     }
 
     private void DarkModeToggle()
