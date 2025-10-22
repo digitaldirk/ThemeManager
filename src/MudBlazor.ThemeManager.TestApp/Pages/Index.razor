@@ -115,6 +115,16 @@
             <MudAvatar Color="Color.Error" Variant="Variant.Outlined" Class="my-auto">R</MudAvatar>
         </MudPaper>
     </MudItem>
+    
+    <MudItem xs="12" sm="12" md="4">
+        <MudPaper Class="pa-4 d-flex justify-space-around flex-wrap" MinHeight="100px" Height="100%">
+            <MudStack>
+                <MudSkeleton />
+                <MudSkeleton SkeletonType="SkeletonType.Circle" Width="50px" Height="50px" />
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="200px" Height="110px" />
+            </MudStack>
+        </MudPaper>
+    </MudItem>
 </MudGrid>
 
 @code {

@@ -1,23 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider @ref="@_mudThemeProvider" Theme="_themeManager.Theme" @bind-IsDarkMode="@_isDarkMode" />
+<MudThemeProvider @ref="@_mudThemeProvider" Theme="_themeManager" @bind-IsDarkMode="@_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="_themeManager.AppBarElevation">
+    <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudIconButton Icon="@(_isDarkMode? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())" />
         <MudSpacer />
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="_themeManager.DrawerClipMode" Elevation="_themeManager.DrawerElevation">
+    <MudDrawer @bind-Open="_drawerOpen" >
         <MudText Typo="Typo.h6" Class="px-4 pt-2">Theme Manager</MudText>
         <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Test Application</MudText>
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.False" Class="mt-16 px-16">
+        <MudContainer MaxWidth="MaxWidth.False" Class="mt-12">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -25,7 +25,7 @@
 </MudLayout>
 
 @code {
-    private ThemeManagerTheme _themeManager = new();
+    private MudTheme _themeManager = new();
     private MudThemeProvider _mudThemeProvider;
 
     private bool _isDarkMode;
@@ -42,7 +42,7 @@
         StateHasChanged();
     }
 
-    private void UpdateTheme(ThemeManagerTheme value)
+    private void UpdateTheme(MudTheme value)
     {
         _themeManager = value;
         StateHasChanged();

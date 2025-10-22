@@ -30,14 +30,13 @@ public partial class MudThemeManager : ComponentBaseWithState
 
     public string ThemePresets { get; set; } = "Not Implemented";
 
-    [Parameter]
-    public bool Open { get; set; }
+    [Parameter] public bool Open { get; set; } = true;
 
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
     [Parameter]
-    public ThemeManagerTheme? Theme { get; set; }
+    public MudTheme? Theme { get; set; }
 
     [Parameter]
     public bool IsDarkMode { get; set; }
@@ -46,7 +45,7 @@ public partial class MudThemeManager : ComponentBaseWithState
     public ColorPickerView ColorPickerView { get; set; } = ColorPickerView.Spectrum;
 
     [Parameter]
-    public EventCallback<ThemeManagerTheme> ThemeChanged { get; set; }
+    public EventCallback<MudTheme> ThemeChanged { get; set; }
     
     protected override void OnInitialized()
     {
@@ -59,15 +58,22 @@ public partial class MudThemeManager : ComponentBaseWithState
             return;
         }
 
-        _customTheme = Theme.Theme.DeepClone();
-        _currentPaletteLight = Theme.Theme.PaletteLight.DeepClone();
-        _currentPaletteDark = Theme.Theme.PaletteDark.DeepClone();
+        _customTheme = Theme.DeepClone();
+        _currentPaletteLight = Theme.PaletteLight.DeepClone();
+        _currentPaletteDark = Theme.PaletteDark.DeepClone();
     }
 
     private void ExportTheme()
     {
         
     }
+    
+    public string FontFamily { get; set; } = "Roboto";
+    private int DrawerWidthRight = 240;
+    private int DrawerWidthLeft = 240;
+    private int DrawerMiniWidthRight = 56;
+    private int DrawerMiniWidthLeft = 56;
+    private int AppbarHeight = 64;
     
     public Task UpdatePalette(ThemeUpdatedValue value)
     {
@@ -160,7 +166,9 @@ public partial class MudThemeManager : ComponentBaseWithState
             case ThemePaletteColor.ActionDisabledBackground:
                 newPalette.ActionDisabledBackground = value.ColorStringValue;
                 break;
-
+            case ThemePaletteColor.Skeleton:
+                newPalette.Skeleton = value.ColorStringValue;
+                break;
         }
 
         if (_isDarkModeState.Value)
@@ -174,12 +182,12 @@ public partial class MudThemeManager : ComponentBaseWithState
         if (_isDarkModeState.Value)
         {
             _currentPaletteDark = _customTheme.PaletteDark;
-            Theme.Theme.PaletteDark = _customTheme.PaletteDark;
+            Theme.PaletteDark = _customTheme.PaletteDark;
         }
         else
         {
             _currentPaletteLight = _customTheme.PaletteLight;
-            Theme.Theme.PaletteLight = _customTheme.PaletteLight;
+            Theme.PaletteLight = _customTheme.PaletteLight;
         }
 
         return UpdateThemeChangedAsync();
@@ -201,17 +209,17 @@ public partial class MudThemeManager : ComponentBaseWithState
         }
     }
 
-    private Task OnDrawerClipModeAsync(DrawerClipMode value)
-    {
-        if (Theme is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        Theme.DrawerClipMode = value;
-
-        return UpdateThemeChangedAsync();
-    }
+    // private Task OnDrawerClipModeAsync(DrawerClipMode value)
+    // {
+    //     if (Theme is null)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     Theme. = value;
+    //
+    //     return UpdateThemeChangedAsync();
+    // }
 
     private Task OnDefaultBorderRadiusAsync(int value)
     {
@@ -225,13 +233,132 @@ public partial class MudThemeManager : ComponentBaseWithState
             return Task.CompletedTask;
         }
 
-        Theme.DefaultBorderRadius = value;
+        //Theme.LayoutProperties.DefaultBorderRadius = $"{value}px";
         var newBorderRadius = _customTheme.LayoutProperties;
 
         newBorderRadius.DefaultBorderRadius = $"{value}px";
 
         _customTheme.LayoutProperties = newBorderRadius;
-        Theme.Theme = _customTheme;
+        Theme = _customTheme;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnDrawerMiniWidthLeftAsync(int value)
+    {
+        if (Theme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (_customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        DrawerMiniWidthLeft = value;
+
+        var newDrawerMiniWidthLeft = _customTheme.LayoutProperties;
+
+        newDrawerMiniWidthLeft.DrawerMiniWidthLeft = $"{value}px";
+
+        _customTheme.LayoutProperties = newDrawerMiniWidthLeft;
+        Theme = _customTheme;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnDrawerMiniWidthRightAsync(int value)
+    {
+        if (Theme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (_customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        DrawerMiniWidthRight = value;
+
+        var newDrawerMiniWidthRight = _customTheme.LayoutProperties;
+
+        newDrawerMiniWidthRight.DrawerMiniWidthRight = $"{value}px";
+
+        _customTheme.LayoutProperties = newDrawerMiniWidthRight;
+        Theme = _customTheme;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnDrawerWidthLeftAsync(int value)
+    {
+        if (Theme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (_customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        DrawerWidthLeft = value;
+
+        var newDrawerWidthLeft = _customTheme.LayoutProperties;
+
+        newDrawerWidthLeft.DrawerWidthLeft = $"{value}px";
+
+        _customTheme.LayoutProperties = newDrawerWidthLeft;
+        Theme = _customTheme;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnDrawerWidthRightAsync(int value)
+    {
+        if (Theme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (_customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        DrawerWidthRight = value;
+
+        var newDrawerWidthRight = _customTheme.LayoutProperties;
+
+        newDrawerWidthRight.DrawerMiniWidthRight = $"{value}px";
+
+        _customTheme.LayoutProperties = newDrawerWidthRight;
+        Theme = _customTheme;
+
+        return UpdateThemeChangedAsync();
+    }
+    
+    private Task OnAppbarHeightAsync(int value)
+    {
+        if (Theme is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (_customTheme is null)
+        {
+            return Task.CompletedTask;
+        }
+        
+        AppbarHeight = value;
+
+        var newAppbarHeight = _customTheme.LayoutProperties;
+
+        newAppbarHeight.AppbarHeight = $"{value}px";
+
+        _customTheme.LayoutProperties = newAppbarHeight;
+        Theme = _customTheme;
 
         return UpdateThemeChangedAsync();
     }
@@ -243,41 +370,41 @@ public partial class MudThemeManager : ComponentBaseWithState
             return Task.CompletedTask;
         }
 
-        Theme.DefaultElevation = value;
+        //Theme.Shadows.DefaultElevation = value;
         var newDefaultElevation = _customTheme.Shadows;
 
         string newElevation = newDefaultElevation.Elevation[value];
         newDefaultElevation.Elevation[1] = newElevation;
 
         _customTheme.Shadows.Elevation[1] = newElevation;
-        Theme.Theme = _customTheme;
+        Theme = _customTheme;
 
         return UpdateThemeChangedAsync();
     }
 
-    private Task OnAppBarElevationAsync(int value)
-    {
-        if (Theme is null)
-        {
-            return Task.CompletedTask;
-        }
+    // private Task OnAppBarElevationAsync(int value)
+    // {
+    //     if (Theme is null)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     Theme.AppBarElevation = value;
+    //
+    //     return UpdateThemeChangedAsync();
+    // }
 
-        Theme.AppBarElevation = value;
-
-        return UpdateThemeChangedAsync();
-    }
-
-    private Task OnDrawerElevationAsync(int value)
-    {
-        if (Theme is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        Theme.DrawerElevation = value;
-
-        return UpdateThemeChangedAsync();
-    }
+    // private Task OnDrawerElevationAsync(int value)
+    // {
+    //     if (Theme is null)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     Theme.DrawerElevation = value;
+    //
+    //     return UpdateThemeChangedAsync();
+    // }
 
     private Task OnFontFamilyAsync(string value)
     {
@@ -286,7 +413,7 @@ public partial class MudThemeManager : ComponentBaseWithState
             return Task.CompletedTask;
         }
 
-        Theme.FontFamily = value;
+        //Theme.FontFamily = value;
         var newTypography = _customTheme.Typography;
 
         newTypography.Body1.FontFamily = new[] { value, "Helvetica", "Arial", "sans-serif" };
@@ -305,7 +432,7 @@ public partial class MudThemeManager : ComponentBaseWithState
         newTypography.Subtitle2.FontFamily = new[] { value, "Helvetica", "Arial", "sans-serif" };
 
         _customTheme.Typography = newTypography;
-        Theme.Theme = _customTheme;
+        Theme = _customTheme;
 
         return UpdateThemeChangedAsync();
     }

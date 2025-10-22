@@ -50,6 +50,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Update="Components\MudThemeManager.css">
+      <DependentUpon>MudThemeManager.razor</DependentUpon>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
