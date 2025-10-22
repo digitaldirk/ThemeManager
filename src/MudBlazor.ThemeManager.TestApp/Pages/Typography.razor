@@ -1,143 +1,28 @@
 ﻿@page "/Typography"
-@using System.Text.RegularExpressions
+@using MudBlazor.ThemeManager.TestApp.Components
 
-<MudSimpleTable Class="docs-class-table default-theme" Dense="true" Elevation="0" FixedHeader="true">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>CSS Variable</th>
-        <th>CSS Class</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var Row in ApiTypography)
-    {
-        <tr>
-            @if (Row.IsHeader)
-            {
-                <th>@Row.Name</th>
-                <th>@Row.Type</th>
-                <th>@Row.Default</th>
-                <th>@Row.CSSVariable</th>
-                <th>@Row.CSSClass</th>
-            }
-            else
-            {
-                <td>@Row.Name</td>
-                <td>@Row.Type</td>
-                <td>
-                    @if (Row.CSSVariable.Contains("default-family"))
-                    {
-                        string fontFamily = "";
-                        if (mudTheme.Typography.Default.FontFamily is not null)
-                        {
-                            foreach (string font in mudTheme.Typography.Default.FontFamily)
-                            {
-                                if (fontFamily == "")
-                                {
-                                    fontFamily += font;
-                                }
-                                else
-                                {
-                                    fontFamily = fontFamily + ", " + font;
-                                }
-                            }
-                        }
-                        @fontFamily
-                    }
-                    else
-                    {
-                        @Row.Default
-                    }
-                                        
-                </td>
-                <td>@Row.CSSVariable</td>
-                <td>@Row.CSSClass</td>
-            }
-        </tr>
-    }
-    </tbody>
-</MudSimpleTable>
+<MudStack Spacing="1">
+    <MudText Typo="Typo.h1"><b>h1:</b> Heading <TypographyDefaultDisplay Typography="@(new H1Typography())"/></MudText>
+    <MudText Typo="Typo.h2"><b>h2:</b> Heading <TypographyDefaultDisplay Typography="@(new H2Typography())"/></MudText>
+    <MudText Typo="Typo.h3"><b>h3:</b> Heading <TypographyDefaultDisplay Typography="@(new H3Typography())"/></MudText>
+    <MudText Typo="Typo.h4"><b>h4:</b> Heading <TypographyDefaultDisplay Typography="@(new H4Typography())"/></MudText>
+    <MudText Typo="Typo.h5"><b>h5:</b> Heading <TypographyDefaultDisplay Typography="@(new H5Typography())"/></MudText>
+    <MudText Typo="Typo.h6"><b>h6:</b> Heading <TypographyDefaultDisplay Typography="@(new H6Typography())"/></MudText>
+    <br/>
+    <MudText Typo="Typo.subtitle1"><b>subtitle1:</b> @_testText <TypographyDefaultDisplay Typography="@(new Subtitle1Typography())"/></MudText>
+    <MudText Typo="Typo.subtitle2"><b>subtitle2:</b> @_testText <TypographyDefaultDisplay Typography="@(new Subtitle2Typography())"/></MudText>
+    <br/>
+    <MudText Typo="Typo.body1"><b>body1:</b> @_testText <TypographyDefaultDisplay Typography="@(new Body1Typography())"/></MudText>
+    <MudText Typo="Typo.body2"><b>body2:</b> @_testText <TypographyDefaultDisplay Typography="@(new Body2Typography())"/></MudText>
+    <br/>
+    <MudText Typo="Typo.button"><b>button:</b> BUTTON TEXT <TypographyDefaultDisplay Typography="@(new ButtonTypography())"/></MudText>
+    <MudText Typo="Typo.caption"><b>caption:</b> caption text <TypographyDefaultDisplay Typography="@(new CaptionTypography())"/></MudText>
+    <MudText Typo="Typo.overline"><b>overline:</b> OVERLINE TEXT <TypographyDefaultDisplay Typography="@(new OverlineTypography())"/></MudText>
+    <br/>
+    <MudText Typo="Typo.button" HtmlTag="h3">button typo but the element is h3</MudText>
+    <MudText Typo="Typo.body2" HtmlTag="strong">body2 typo but the element is strong</MudText>
+</MudStack>
 
-@code {
-    MudTheme mudTheme = new MudTheme();
-    
-    private List<ApiDefaultTheme> ApiTypography= new List<ApiDefaultTheme>();
-    
-    protected override void OnInitialized()
-    {
-        LoadTypography();
-    }
-    
-    private void LoadTypography()
-    {
-        foreach (var _typography in typeof(Typography).GetProperties())
-        {
-            ApiTypography.Add(new ApiDefaultTheme()
-            {
-                Name = _typography.Name,
-                Type = _typography.PropertyType.ToString(),
-                IsHeader = true
-            });
-            foreach (var item in _typography.GetValue(mudTheme.Typography, null).GetType().GetProperties())
-            {
-                ApiTypography.Add(new ApiDefaultTheme()
-                {
-                    Name = _typography.GetValue(mudTheme.Typography, null).GetType().GetProperty(item.Name).Name,
-                    Type = _typography.GetValue(mudTheme.Typography, null).GetType().GetProperty(item.Name).PropertyType.ToString(),
-                    Default = _typography.GetValue(mudTheme.Typography, null).GetType().GetProperty(item.Name).GetValue(_typography.GetValue(mudTheme.Typography, null), null),
-                    CSSVariable = $"--mud-typography-{_typography.Name.ToLower()}{GetCssVar(_typography.GetValue(mudTheme.Typography, null).GetType().GetProperty(item.Name).Name)}"
-                });
-            }
-        }
-    }
-    
-    private string GetCssVar(string value)
-    {
-        if (value == "AppBar")
-        {
-            return value.ToLowerInvariant();
-        }
-        else if (value.Contains("ContrastText"))
-        {
-            return value.Replace("ContrastText", "-Text").ToLowerInvariant();
-        }
-        else if (value.Contains("Font"))
-        {
-            return value.Replace("Font", "-").ToLowerInvariant();
-        }
-        else if (value.Contains("LineHeight"))
-        {
-            return value.Replace("LineHeight", "-LineHeight").ToLowerInvariant();
-        }
-        else if (value.Contains("LetterSpacing"))
-        {
-            return value.Replace("LetterSpacing", "-LetterSpacing").ToLowerInvariant();
-        }
-        else if (value.Contains("TextTransform"))
-        {
-            return value.Replace("TextTransform", "-Text-Transform").ToLowerInvariant();
-        }
-        else if (value.Contains("BorderRadius"))
-        {
-            return value.Replace("BorderRadius", "-BorderRadius").ToLowerInvariant();
-        }
-        else
-        {
-            return Regex.Replace(value, @"\B[A-Z]", "-$&").ToLowerInvariant();
-        }
-    }
-
-    private class ApiDefaultTheme
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public object Default { get; set; }
-        public object Dark { get; set; }
-        public string CSSClass { get; set; }
-        public string CSSVariable { get; set; }
-        public bool IsHeader { get; set; }
-    }
+@code{
+    private static readonly string _testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur";
 }
