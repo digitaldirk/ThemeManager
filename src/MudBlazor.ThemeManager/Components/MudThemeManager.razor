@@ -3,181 +3,202 @@
 @inherits ComponentBaseWithState
 
 <CascadingValue Value="this">
-    <MudDrawer Style="backdrop-filter: blur(10px); -webkit-backdrop-filter:blur(10px); background-color: rgba(var(--mud-palette-background), 0.2);" @bind-Open:get="_openState.Value" @bind-Open:set="_openState.SetValueAsync" Anchor="Anchor.End" Elevation="25" Variant="@DrawerVariant.Temporary" Overlay="false" Width="312px">
+    <MudDrawer Style="backdrop-filter: blur(10px); -webkit-backdrop-filter:blur(10px); background-color: rgba(var(--mud-palette-background), 0.2);z-index: 10000" @bind-Open:get="_openState.Value" @bind-Open:set="_openState.SetValueAsync" Anchor="Anchor.End" Elevation="25" Variant="@DrawerVariant.Temporary" Overlay="false" Width="312px">
         <div class="pa-2">
-            <MudText Typo="Typo.h6">Theme Presets</MudText>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudSelect Clearable="true" T="ThemePreset" @bind-Value="@SelectedThemePreset" Variant="Variant.Filled" Margin="Margin.Dense" Dense="true">
-                    @foreach (var tp in ThemePreset.ThemePresets)
-                    {
-                        <MudSelectItem Value="tp">@tp.PresetName</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudTooltip Text="@(SelectedThemePreset == null ? "" : $"Apply {SelectedThemePreset.PresetName} Theme")">
-                    <MudIconButton OnClick="ApplyThemePreset" Disabled="@(SelectedThemePreset == null ? true : false)" Icon="@Icons.Material.Filled.ColorLens" Variant="Variant.Filled" Color="Color.Primary"/>
-                </MudTooltip>
-            </MudStack>
-        </div>
-        <div class="pa-2">
-        <MudExpansionPanels Dense="true" MultiExpansion="true">
+            <MudExpansionPanels Dense="true" MultiExpansion="true" Outlined="true">
             <MudExpansionPanel>
                 <TitleContent>
-                    <MudText Typo="Typo.h6">Breakpoints</MudText>
+                    <MudText Typo="Typo.h6">Theme Presets</MudText>
                 </TitleContent>
                 <ChildContent>
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthLeft" ValueChanged="OnDrawerMiniWidthLeftAsync" T="int" Label="Extra Small (xs)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthRight" ValueChanged="OnDrawerMiniWidthRightAsync" T="int" Label="Small (sm)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthLeft" ValueChanged="OnDrawerWidthLeftAsync" T="int" Label="Medium (md)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthRight" ValueChanged="OnDrawerWidthRightAsync" T="int" Label="Large (lg)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Large (xl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    
-                    <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Extra Large (xxl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                </ChildContent>
-            </MudExpansionPanel>
-            <MudExpansionPanel>
-                <TitleContent>
-                    <MudText Typo="Typo.h6">Layout Properties</MudText>
-                </TitleContent>
-                <ChildContent>
-                    <MudSlider Step="1" Min="0" Max="25" T="int" ValueChanged="OnDefaultBorderRadiusAsync"><MudText Typo="Typo.body2">Default Border Radius: <b>@($"{@Theme.LayoutProperties.DefaultBorderRadius}")</b></MudText></MudSlider>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthLeft" ValueChanged="OnDrawerMiniWidthLeftAsync" T="int" Label="Drawer Mini Width Left" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthRight" ValueChanged="OnDrawerMiniWidthRightAsync" T="int" Label="Drawer Mini Width Right" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthLeft" ValueChanged="OnDrawerWidthLeftAsync" T="int" Label="Drawer Width Left" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthRight" ValueChanged="OnDrawerWidthRightAsync" T="int" Label="Drawer Width Right" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-
-                    <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Appbar Height" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                </ChildContent>
-            </MudExpansionPanel>
-
-            <MudExpansionPanel>
-                <TitleContent>
-                    <MudText Typo="Typo.h6">@(_isDarkModeState.Value ? "Dark" : "Light") Palette</MudText>
-                </TitleContent>
-                <ChildContent>
-                    <MudThemeManagerColorItem Name="Primary" ThemeColor="@_currentPalette.Primary" ColorType="ThemePaletteColor.Primary" ColorPickerView="ColorPickerView" />
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
-                        <MudThemeManagerColorItem Name="Lighten" ThemeColor="@_currentPalette.PrimaryLighten" ColorType="ThemePaletteColor.PrimaryLighten" ColorPickerView="ColorPickerView" />
-                        <MudThemeManagerColorItem Name="Darken" ThemeColor="@_currentPalette.PrimaryDarken" ColorType="ThemePaletteColor.PrimaryDarken" ColorPickerView="ColorPickerView" />
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudSelect Clearable="true" T="ThemePreset" @bind-Value="@SelectedThemePreset" Variant="Variant.Filled" Margin="Margin.Dense" Dense="true">
+                            @foreach (var tp in ThemePreset.ThemePresets)
+                            {
+                                <MudSelectItem Value="tp">@tp.PresetName</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTooltip Text="@(SelectedThemePreset == null ? "" : $"Apply {SelectedThemePreset.PresetName} Theme")">
+                            <MudIconButton OnClick="ApplyThemePreset" Disabled="@(SelectedThemePreset == null ? true : false)" Icon="@Icons.Material.Filled.ColorLens" Variant="Variant.Filled" Color="Color.Primary"/>
+                        </MudTooltip>
                     </MudStack>
-
-                    <MudThemeManagerColorItem Name="Secondary" ThemeColor="@_currentPalette.Secondary" ColorType="ThemePaletteColor.Secondary" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Tertiary" ThemeColor="@_currentPalette.Tertiary" ColorType="ThemePaletteColor.Tertiary" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Info" ThemeColor="@_currentPalette.Info" ColorType="ThemePaletteColor.Info" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Success" ThemeColor="@_currentPalette.Success" ColorType="ThemePaletteColor.Success" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Warning" ThemeColor="@_currentPalette.Warning" ColorType="ThemePaletteColor.Warning" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Error" ThemeColor="@_currentPalette.Error" ColorType="ThemePaletteColor.Error" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Dark" ThemeColor="@_currentPalette.Dark" ColorType="ThemePaletteColor.Dark" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Appbar Text" ThemeColor="@_currentPalette.AppbarText" ColorType="ThemePaletteColor.AppbarText" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Appbar Background" ThemeColor="@_currentPalette.AppbarBackground" ColorType="ThemePaletteColor.AppbarBackground" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Drawer Text" ThemeColor="@_currentPalette.DrawerText" ColorType="ThemePaletteColor.DrawerText" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Drawer Icons" ThemeColor="@_currentPalette.DrawerIcon" ColorType="ThemePaletteColor.DrawerIcon" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Drawer Background" ThemeColor="@_currentPalette.DrawerBackground" ColorType="ThemePaletteColor.DrawerBackground" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Surface" ThemeColor="@_currentPalette.Surface" ColorType="ThemePaletteColor.Surface" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Background" ThemeColor="@_currentPalette.Background" ColorType="ThemePaletteColor.Background" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Background Gray" ThemeColor="@_currentPalette.BackgroundGray" ColorType="ThemePaletteColor.BackgroundGray" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Disabled Background" ThemeColor="@_currentPalette.ActionDisabledBackground" ColorType="ThemePaletteColor.ActionDisabledBackground" ColorPickerView="ColorPickerView" />
-
-                    <MudThemeManagerColorItem Name="Lines Default" ThemeColor="@_currentPalette.LinesDefault" ColorType="ThemePaletteColor.LinesDefault" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Lines Inputs" ThemeColor="@_currentPalette.LinesInputs" ColorType="ThemePaletteColor.LinesInputs" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Divider" ThemeColor="@_currentPalette.Divider" ColorType="ThemePaletteColor.Divider" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Divider Light" ThemeColor="@_currentPalette.DividerLight" ColorType="ThemePaletteColor.DividerLight" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Text Primary" ThemeColor="@_currentPalette.TextPrimary" ColorType="ThemePaletteColor.TextPrimary" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Text Secondary" ThemeColor="@_currentPalette.TextSecondary" ColorType="ThemePaletteColor.TextSecondary" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Text Disabled" ThemeColor="@_currentPalette.TextDisabled" ColorType="ThemePaletteColor.TextDisabled" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Action Default" ThemeColor="@_currentPalette.ActionDefault" ColorType="ThemePaletteColor.ActionDefault" ColorPickerView="ColorPickerView" />
-                    <MudThemeManagerColorItem Name="Action Disabled" ThemeColor="@_currentPalette.ActionDisabled" ColorType="ThemePaletteColor.ActionDisabled" ColorPickerView="ColorPickerView" />
-                    
-                    <MudThemeManagerColorItem Name="Skeleton" ThemeColor="@_currentPalette.Skeleton" ColorType="ThemePaletteColor.Skeleton" ColorPickerView="ColorPickerView" />
-
                 </ChildContent>
             </MudExpansionPanel>
-            
-            <MudExpansionPanel>
-                <TitleContent>
-                    <MudText Typo="Typo.h6">Shadows (Elevation)</MudText>
-                </TitleContent>
-                <ChildContent>
-                  <MudGrid Spacing="2">
-                  @for (int i = 0; i < _customTheme.Shadows.Elevation.Length; i++)
-                  {
-                      var index = i;
-                      <MudItem xs="12">
-                          <MudTextField AutoGrow="true" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate="true" Value="_customTheme.Shadows.Elevation[index]" ValueChanged="@(async (string val) => await OnElevationAsync(index, val))" Label="@($"Elevation {index}")" FullWidth="true" />
-                      </MudItem>
-                  }
-                  </MudGrid>
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">Breakpoints</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthLeft" ValueChanged="OnDrawerMiniWidthLeftAsync" T="int" Label="Extra Small (xs)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
 
-                </ChildContent>
-            </MudExpansionPanel>
-            <MudExpansionPanel>
-                <TitleContent>
-                    <MudText Typo="Typo.h6">Typography (Text)</MudText>
-                </TitleContent>
-                <ChildContent>
-                    <MudSelect Label="Font Family" T="string" Value="@FontFamily" ValueChanged="OnFontFamilyAsync" Dense="true" Underline="false" Class="my-2">
-                        <MudSelectItem T="string" Value="@("Roboto")"/>
-                        <MudSelectItem T="string" Value="@("Montserrat")"/>
-                        <MudSelectItem T="string" Value="@("Segoe UI")"/>
-                        <MudSelectItem T="string" Value="@("Ubuntu")"/>
-                    </MudSelect>
-                </ChildContent>
-            </MudExpansionPanel>
-            <MudExpansionPanel>
-                <TitleContent>
-                    <MudText Typo="Typo.h6">Z Index</MudText>
-                </TitleContent>
-                <ChildContent>
-                    <MudNumericField Step="1"  Value="_customZIndex.Drawer" ValueChanged="OnDrawerZIndexAsync" T="int" Label="Drawer" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    <MudNumericField Step="1"  Value="_customZIndex.Popover" ValueChanged="OnPopoverZIndexAsync" T="int" Label="Popover" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    <MudNumericField Step="1"  Value="_customZIndex.AppBar" ValueChanged="OnAppBarZIndexAsync" T="int" Label="AppBar" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    <MudNumericField Step="1"  Value="_customZIndex.Dialog" ValueChanged="OnDialogZIndexAsync" T="int" Label="Dialog" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    <MudNumericField Step="1"  Value="_customZIndex.Snackbar" ValueChanged="OnSnackbarZIndexAsync" T="int" Label="Snackbar" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                    <MudNumericField Step="1"  Value="_customZIndex.Tooltip" ValueChanged="OnTooltipZIndexAsync" T="int" Label="Tooltip" Variant="Variant.Outlined" Margin="Margin.Dense"/>
-                </ChildContent>
-            </MudExpansionPanel>
-        </MudExpansionPanels>
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthRight" ValueChanged="OnDrawerMiniWidthRightAsync" T="int" Label="Small (sm)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthLeft" ValueChanged="OnDrawerWidthLeftAsync" T="int" Label="Medium (md)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthRight" ValueChanged="OnDrawerWidthRightAsync" T="int" Label="Large (lg)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Large (xl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Extra Large (xxl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                    </ChildContent>
+                </MudExpansionPanel>
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">Layout Properties</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudSlider Step="1" Min="0" Max="25" T="int" ValueChanged="OnDefaultBorderRadiusAsync"><MudText Typo="Typo.body2">Default Border Radius: <b>@($"{@Theme.LayoutProperties.DefaultBorderRadius}")</b></MudText></MudSlider>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthLeft" ValueChanged="OnDrawerMiniWidthLeftAsync" T="int" Label="Drawer Mini Width Left" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthRight" ValueChanged="OnDrawerMiniWidthRightAsync" T="int" Label="Drawer Mini Width Right" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthLeft" ValueChanged="OnDrawerWidthLeftAsync" T="int" Label="Drawer Width Left" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthRight" ValueChanged="OnDrawerWidthRightAsync" T="int" Label="Drawer Width Right" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                        <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Appbar Height" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                    </ChildContent>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">@(_isDarkModeState.Value ? "Dark" : "Light") Palette</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        @* <MudThemeManagerColorItem Name="Primary" ThemeColor="@_currentPalette.Primary" /> *@
+                        <MudButton OnClick="@( () => SetupColorPicker(_currentPalette.Primary, ThemePaletteColor.Primary))" FullWidth="true">
+                            <div style="width:100%;">
+                                <MudText Typo="Typo.body2">Primary</MudText>
+                                <div class="rounded-pill" style="background:@_currentPalette.Primary.ToString();height: 25px"/>
+                            </div>
+                        </MudButton>
+                        
+                        <MudButton OnClick="@( () => SetupColorPicker(_currentPalette.PrimaryLighten, ThemePaletteColor.PrimaryLighten))" FullWidth="true">
+                            <div style="width:100%;">
+                                <MudText Typo="Typo.body2">Primary Lighten</MudText>
+                                <div class="rounded-pill" style="background:@_currentPalette.PrimaryLighten.ToString();height: 25px"/>
+                            </div>
+                        </MudButton>
+                        
+                        
+                        @* <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center"> *@
+                        @*     <MudThemeManagerColorItem Name="Lighten" ThemeColor="@_currentPalette.PrimaryLighten" ColorType="ThemePaletteColor.PrimaryLighten" ColorPickerView="ColorPickerView"/> *@
+                        @*     <MudThemeManagerColorItem Name="Darken" ThemeColor="@_currentPalette.PrimaryDarken" ColorType="ThemePaletteColor.PrimaryDarken" ColorPickerView="ColorPickerView"/> *@
+                        @* </MudStack> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Secondary" ThemeColor="@_currentPalette.Secondary" ColorType="ThemePaletteColor.Secondary" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Tertiary" ThemeColor="@_currentPalette.Tertiary" ColorType="ThemePaletteColor.Tertiary" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Info" ThemeColor="@_currentPalette.Info" ColorType="ThemePaletteColor.Info" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Success" ThemeColor="@_currentPalette.Success" ColorType="ThemePaletteColor.Success" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Warning" ThemeColor="@_currentPalette.Warning" ColorType="ThemePaletteColor.Warning" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Error" ThemeColor="@_currentPalette.Error" ColorType="ThemePaletteColor.Error" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Dark" ThemeColor="@_currentPalette.Dark" ColorType="ThemePaletteColor.Dark" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Appbar Text" ThemeColor="@_currentPalette.AppbarText" ColorType="ThemePaletteColor.AppbarText" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Appbar Background" ThemeColor="@_currentPalette.AppbarBackground" ColorType="ThemePaletteColor.AppbarBackground" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Drawer Text" ThemeColor="@_currentPalette.DrawerText" ColorType="ThemePaletteColor.DrawerText" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Drawer Icons" ThemeColor="@_currentPalette.DrawerIcon" ColorType="ThemePaletteColor.DrawerIcon" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Drawer Background" ThemeColor="@_currentPalette.DrawerBackground" ColorType="ThemePaletteColor.DrawerBackground" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Surface" ThemeColor="@_currentPalette.Surface" ColorType="ThemePaletteColor.Surface" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Background" ThemeColor="@_currentPalette.Background" ColorType="ThemePaletteColor.Background" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Background Gray" ThemeColor="@_currentPalette.BackgroundGray" ColorType="ThemePaletteColor.BackgroundGray" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Disabled Background" ThemeColor="@_currentPalette.ActionDisabledBackground" ColorType="ThemePaletteColor.ActionDisabledBackground" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Lines Default" ThemeColor="@_currentPalette.LinesDefault" ColorType="ThemePaletteColor.LinesDefault" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Lines Inputs" ThemeColor="@_currentPalette.LinesInputs" ColorType="ThemePaletteColor.LinesInputs" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Divider" ThemeColor="@_currentPalette.Divider" ColorType="ThemePaletteColor.Divider" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Divider Light" ThemeColor="@_currentPalette.DividerLight" ColorType="ThemePaletteColor.DividerLight" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Text Primary" ThemeColor="@_currentPalette.TextPrimary" ColorType="ThemePaletteColor.TextPrimary" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Text Secondary" ThemeColor="@_currentPalette.TextSecondary" ColorType="ThemePaletteColor.TextSecondary" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Text Disabled" ThemeColor="@_currentPalette.TextDisabled" ColorType="ThemePaletteColor.TextDisabled" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Action Default" ThemeColor="@_currentPalette.ActionDefault" ColorType="ThemePaletteColor.ActionDefault" ColorPickerView="ColorPickerView"/> *@
+                        @* <MudThemeManagerColorItem Name="Action Disabled" ThemeColor="@_currentPalette.ActionDisabled" ColorType="ThemePaletteColor.ActionDisabled" ColorPickerView="ColorPickerView"/> *@
+                        @* *@
+                        @* <MudThemeManagerColorItem Name="Skeleton" ThemeColor="@_currentPalette.Skeleton" ColorType="ThemePaletteColor.Skeleton" ColorPickerView="ColorPickerView"/> *@
+
+                    </ChildContent>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">Shadows (Elevation)</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudGrid Spacing="2">
+                            @for (int i = 0; i < _customTheme.Shadows.Elevation.Length; i++)
+                            {
+                                var index = i;
+                                <MudItem xs="12">
+                                    <MudTextField AutoGrow="true" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate="true" Value="_customTheme.Shadows.Elevation[index]" ValueChanged="@(async (string val) => await OnElevationAsync(index, val))" Label="@($"Elevation {index}")" FullWidth="true"/>
+                                </MudItem>
+                            }
+                        </MudGrid>
+
+                    </ChildContent>
+                </MudExpansionPanel>
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">Typography (Text)</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudSelect Label="Font Family" T="string" Value="@FontFamily" ValueChanged="OnFontFamilyAsync" Dense="true" Underline="false" Class="my-2">
+                            <MudSelectItem T="string" Value="@("Roboto")"/>
+                            <MudSelectItem T="string" Value="@("Montserrat")"/>
+                            <MudSelectItem T="string" Value="@("Segoe UI")"/>
+                            <MudSelectItem T="string" Value="@("Ubuntu")"/>
+                        </MudSelect>
+                    </ChildContent>
+                </MudExpansionPanel>
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <MudText Typo="Typo.h6">Z Index</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudNumericField Step="1" Value="_customZIndex.Drawer" ValueChanged="OnDrawerZIndexAsync" T="int" Label="Drawer" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                        <MudNumericField Step="1" Value="_customZIndex.Popover" ValueChanged="OnPopoverZIndexAsync" T="int" Label="Popover" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                        <MudNumericField Step="1" Value="_customZIndex.AppBar" ValueChanged="OnAppBarZIndexAsync" T="int" Label="AppBar" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                        <MudNumericField Step="1" Value="_customZIndex.Dialog" ValueChanged="OnDialogZIndexAsync" T="int" Label="Dialog" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                        <MudNumericField Step="1" Value="_customZIndex.Snackbar" ValueChanged="OnSnackbarZIndexAsync" T="int" Label="Snackbar" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                        <MudNumericField Step="1" Value="_customZIndex.Tooltip" ValueChanged="OnTooltipZIndexAsync" T="int" Label="Tooltip" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                    </ChildContent>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
         </div>
     </MudDrawer>
-    @* <MudOverlay @bind-Visible:get="_openState.Value" @bind-Visible:set="_openState.SetValueAsync" OnClick="@UpdateOpenValueAsync" DarkBackground="false" /> *@
-    
  
-    <MudTooltip Arrow="true" Placement="Placement.Left" Text="@(_openState.Value ? "Hide Theme Manager" : "Show Theme Manager")">
-        <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:30%;position: fixed;z-index: 1700;")" Class="rounded-l-xl rounded-0" OnClick="@(() => _openState.SetValueAsync(!_openState.Value))" Icon="@(_openState.Value ? @Icons.Material.Filled.ArrowRight : @Icons.Material.Filled.ArrowLeft)" Variant="Variant.Filled" Color="Color.Primary" />
+    <MudTooltip Inline="false" Arrow="true" Placement="Placement.Left" Text="@(_openState.Value ? "Hide Theme Manager" : "Show Theme Manager")">
+        <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:10%;position: fixed;z-index: 10000;")" Class="rounded-l-xl rounded-0" OnClick="@(() => _openState.SetValueAsync(!_openState.Value))" Icon="@(_openState.Value ? @Icons.Material.Filled.ArrowRight : @Icons.Material.Filled.ArrowLeft)" Variant="Variant.Filled" Color="Color.Primary" />
     </MudTooltip>
     
-    <MudTooltip Arrow="true" Placement="Placement.Left" Text="@(_isDarkModeState.Value ? "Switch to Light Mode" : "Switch to Dark Mode")">
-        <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:40%;position: fixed;z-index: 1700;")" Class="rounded-l-xl rounded-0" OnClick="@(() => _isDarkModeState.SetValueAsync(!_isDarkModeState.Value))" Icon="@(_isDarkModeState.Value ? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Variant="Variant.Filled" Color="Color.Primary" />
+    <MudTooltip Inline="true" Arrow="true" Placement="Placement.Left" Text="@(_isDarkModeState.Value ? "Switch to Light Mode" : "Switch to Dark Mode")">
+        <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:20%;position: fixed;z-index: 10000;")" Class="rounded-l-xl rounded-0" OnClick="@(() => _isDarkModeState.SetValueAsync(!_isDarkModeState.Value))" Icon="@(_isDarkModeState.Value ? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Variant="Variant.Filled" Color="Color.Primary" />
     </MudTooltip>
 
         <MudTooltip Arrow="true" Placement="Placement.Left" Text="Import Theme">
             <MudFileUpload T="IBrowserFile" FilesChanged="ImportTheme" Accept=".json" MaximumFileCount="1" >
                 <ActivatorContent>
-                    <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:50%;position: fixed;z-index: 1700;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.Upload" Variant="Variant.Filled" Color="Color.Primary"/>
+                    <MudIconButton Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:30%;position: fixed;z-index: 10000;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.Upload" Variant="Variant.Filled" Color="Color.Primary"/>
                 </ActivatorContent>
             </MudFileUpload>
         </MudTooltip>
     
         <MudTooltip Arrow="true" Placement="Placement.Left" Text="Export Theme">
-            <MudIconButton OnClick="ExportTheme" Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:60%;position: fixed;z-index: 1700;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.SaveAs" Variant="Variant.Filled" Color="Color.Primary" />
+            <MudIconButton OnClick="ExportTheme" Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:40%;position: fixed;z-index: 10000;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.SaveAs" Variant="Variant.Filled" Color="Color.Primary" />
         </MudTooltip>
     
         <MudTooltip Arrow="true" Placement="Placement.Left" Text="Revert to Default Theme">
-            <MudIconButton OnClick="RevertTheme" Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:70%;position: fixed;z-index: 1700;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.Warning" Variant="Variant.Filled" Color="Color.Primary" />
+            <MudIconButton OnClick="RevertTheme" Style="@($"right: {(_openState.Value ? "312px" : "0px")};top:50%;position: fixed;z-index: 10000;")" Class="rounded-l-xl rounded-0" Icon="@Icons.Material.Filled.Warning" Variant="Variant.Filled" Color="Color.Primary" />
         </MudTooltip>
 
+    @if (_openState.Value && _colorPickerOpen)
+    {
+        <MudColorPicker  Value="_setupPalleteColor" ValueChanged="UpdateColor" Style="right:312px;bottom:0px;position:fixed;z-index: 10000;" PickerVariant="PickerVariant.Static"  ColorPickerView="ColorPickerView" />
+    }
     
     <MudDialog @bind-Visible="_exportVisible" Options="_exportDialogOptions">
         <TitleContent>

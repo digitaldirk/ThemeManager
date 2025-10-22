@@ -6,23 +6,30 @@
   </picture>
 </h1>
 
-# Theme Manager / Generator for MudBlazor
+# Theme Manager for MudBlazor
 
 [![GitHub](https://img.shields.io/github/license/garderoben/mudblazor?color=594ae2&style=flat-square&logo=github)](https://github.com/Garderoben/MudBlazor.ThemeManager/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/MudBlazor?color=1DA1F2&label=Twitter&logo=Twitter&style=flat-square)](https://twitter.com/MudBlazor)
 [![Nuget version](https://img.shields.io/nuget/v/MudBlazor.ThemeManager?color=ff4081&label=nuget%20version&logo=nuget&style=flat-square)](https://www.nuget.org/packages/MudBlazor.ThemeManager/)
 [![Discord](https://img.shields.io/discord/786656789310865418?color=%237289da&label=Discord&logo=discord&logoColor=%237289da&style=flat-square)](https://discord.gg/mudblazor)
 
-Blazor Theme Manager component for MudBlazor library. Can be used live or during development to fast and easy try out different theme settings.
+Theme Manager component for the [MudBlazor](https://www.mudblazor.com) library that allows you to try, build, and export MudThemes. You can integrate the standalone ThemeManager component into your projects, or quickly use the included Test App.
 
-**This component is currently not suitable for production applications, be ready for performance issues, bugs and missing features. Feel free to help improve it.**
+### Features
+- Ability to quickly change all MudTheme properties with instant visual feedback.
+- Import and Export MudThemes in either JSON or C# format.
+- Premade themes to use.
 
-## Workflow
-![caption](content/WorkFlow_DarkTheme.webp)
+### Demo
+(Demo video here)
 
-## Prerequisites
-- [MudBlazor](https://www.mudblazor.com/getting-started/installation) Installed and configurated.
-## Installation
+## Getting Started
+You can use the (demo site link here) to experiment with MudTheme creation. If you want to integrate the ThemeManager with your project, follow the steps below:
+
+### Prerequisites
+[MudBlazor](https://www.mudblazor.com/getting-started/installation) Installed and configured.
+
+### Installation
 Install Package
 ```
 dotnet add package MudBlazor.ThemeManager
