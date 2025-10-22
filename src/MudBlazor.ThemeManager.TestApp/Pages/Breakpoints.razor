@@ -1,0 +1,69 @@
+﻿@page "/Breakpoints"
+
+<MudPaper Class="pa-2 mb-4">
+    <MudStack Spacing="4"  Row="true" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h6">Resources:</MudText>
+        <MudLink Href="https://www.mudblazor.com/features/breakpoints" Target="_blank">Documentation</MudLink>
+        <MudLink Href="https://www.mudblazor.com/components/breakpointprovider" Target="_blank">Component</MudLink>
+    </MudStack>
+</MudPaper>
+
+<MudBreakpointProvider>
+    <MudStack Wrap="Wrap.Wrap">
+                <MudHidden Breakpoint="Breakpoint.Xl" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>XL</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Lg" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>LG</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Md" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>MD</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>SM</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>XS</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>LG and Up</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>MD and Up</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>SM and Up</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.LgAndDown" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>LG and Down</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>MD and Down</MudText>
+            </MudCard>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <MudCard Class="pa-5">
+                <MudText>SM and Down</MudText>
+            </MudCard>
+        </MudHidden>
+    </MudStack>
+</MudBreakpointProvider>

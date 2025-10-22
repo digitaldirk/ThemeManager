@@ -25,7 +25,17 @@
                     <MudText Typo="Typo.h6">Breakpoints</MudText>
                 </TitleContent>
                 <ChildContent>
-                  
+                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthLeft" ValueChanged="OnDrawerMiniWidthLeftAsync" T="int" Label="Extra Small (xs)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerMiniWidthRight" ValueChanged="OnDrawerMiniWidthRightAsync" T="int" Label="Small (sm)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthLeft" ValueChanged="OnDrawerWidthLeftAsync" T="int" Label="Medium (md)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                    <MudNumericField Step="10" Min="0" Max="1000" Value="DrawerWidthRight" ValueChanged="OnDrawerWidthRightAsync" T="int" Label="Large (lg)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+
+                    <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Large (xl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                    
+                    <MudNumericField Step="1" Min="0" Max="300" Value="AppbarHeight" ValueChanged="OnAppbarHeightAsync" T="int" Label="Extra Extra Large (xxl)" Variant="Variant.Outlined" Margin="Margin.Dense"/>
                 </ChildContent>
             </MudExpansionPanel>
             <MudExpansionPanel>
@@ -53,6 +63,11 @@
                 </TitleContent>
                 <ChildContent>
                     <MudThemeManagerColorItem Name="Primary" ThemeColor="@_currentPalette.Primary" ColorType="ThemePaletteColor.Primary" ColorPickerView="ColorPickerView" />
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                        <MudThemeManagerColorItem Name="Lighten" ThemeColor="@_currentPalette.PrimaryLighten" ColorType="ThemePaletteColor.PrimaryLighten" ColorPickerView="ColorPickerView" />
+                        <MudThemeManagerColorItem Name="Darken" ThemeColor="@_currentPalette.PrimaryDarken" ColorType="ThemePaletteColor.PrimaryDarken" ColorPickerView="ColorPickerView" />
+                    </MudStack>
+
                     <MudThemeManagerColorItem Name="Secondary" ThemeColor="@_currentPalette.Secondary" ColorType="ThemePaletteColor.Secondary" ColorPickerView="ColorPickerView" />
                     <MudThemeManagerColorItem Name="Tertiary" ThemeColor="@_currentPalette.Tertiary" ColorType="ThemePaletteColor.Tertiary" ColorPickerView="ColorPickerView" />
                     <MudThemeManagerColorItem Name="Info" ThemeColor="@_currentPalette.Info" ColorType="ThemePaletteColor.Info" ColorPickerView="ColorPickerView" />
