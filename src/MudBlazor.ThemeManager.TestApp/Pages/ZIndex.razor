@@ -1,25 +1,34 @@
 ﻿@page "/ZIndex"
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 100px; left: 20%; width: 200px; height: 100px; z-index: var(--mud-zindex-drawer);">
+<MudPaper Class="pa-2">
+    <MudStack Spacing="4"  Row="true" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h6">Resources:</MudText>
+        <MudLink Href="https://www.mudblazor.com/customization/z-index" Target="_blank">Documentation</MudLink>
+        <MudLink Href="https://www.mudblazor.com/utilities/z-index" Target="_blank">CSS Reference</MudLink>
+        <MudLink Href="https://www.mudblazor.com/customization/default-theme#mudtheme-zindex" Target="_blank">Default values</MudLink>
+    </MudStack>
+</MudPaper>
+
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 200px; left: 20%; width: 200px; height: 100px; z-index: var(--mud-zindex-drawer);">
     <MudText>Drawer (1100 default)</MudText>
 </MudPaper>
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 175px; left: 25%; width: 200px; height: 100px; z-index: var(--mud-zindex-popover);">
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 275px; left: 25%; width: 200px; height: 100px; z-index: var(--mud-zindex-popover);">
     <MudText>Popover (1200 default)</MudText>
 </MudPaper>
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 250px; left: 30%; width: 200px; height: 100px; z-index: var(--mud-zindex-appbar);">
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 350px; left: 30%; width: 200px; height: 100px; z-index: var(--mud-zindex-appbar);">
     <MudText>Appbar (1300 default)</MudText>
 </MudPaper>
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 325px; left: 35%; width: 200px; height: 100px; z-index: var(--mud-zindex-dialog);">
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 425px; left: 35%; width: 200px; height: 100px; z-index: var(--mud-zindex-dialog);">
     <MudText>Dialog (1400 default)</MudText>
 </MudPaper>
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 400px; left: 40%; width: 200px; height: 100px; z-index: var(--mud-zindex-snackbar);">
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 500px; left: 40%; width: 200px; height: 100px; z-index: var(--mud-zindex-snackbar);">
     <MudText>Snackbar (1500 default)</MudText>
 </MudPaper>
 
-<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 475px; left: 45%; width: 200px; height: 100px; z-index: var(--mud-zindex-tooltip);">
+<MudPaper Outlined="true" Class="pa-2 d-flex align-center justify-center" Style="position: absolute; top: 575px; left: 45%; width: 200px; height: 100px; z-index: var(--mud-zindex-tooltip);">
     <MudText>Tooltip (1600 default)</MudText>
 </MudPaper>

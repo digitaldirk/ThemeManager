@@ -7,7 +7,7 @@
         <div class="pa-2">
             <MudText Typo="Typo.h6">Theme Presets</MudText>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudSelect Clearable="true" T="ThemePreset" @bind-Value="@SelectedThemePreset" Variant="Variant.Outlined" Margin="Margin.Dense" Dense="true">
+                <MudSelect Clearable="true" T="ThemePreset" @bind-Value="@SelectedThemePreset" Variant="Variant.Filled" Margin="Margin.Dense" Dense="true">
                     @foreach (var tp in ThemePreset.ThemePresets)
                     {
                         <MudSelectItem Value="tp">@tp.PresetName</MudSelectItem>

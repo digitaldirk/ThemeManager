@@ -1,5 +1,13 @@
 ﻿@page "/Typography"
 @using MudBlazor.ThemeManager.TestApp.Components
+<MudPaper Class="pa-2">
+<MudStack Spacing="4"  Row="true" AlignItems="AlignItems.Center">
+    <MudText Typo="Typo.h6">Resources:</MudText>
+    <MudLink Href="https://www.mudblazor.com/customization/typography" Target="_blank">Documentation</MudLink>
+    <MudLink Href="https://www.mudblazor.com/components/typography" Target="_blank">Mud Text Component</MudLink>
+    <MudLink Href="https://www.mudblazor.com/customization/default-theme#mudtheme-typography" Target="_blank">Default values</MudLink>
+</MudStack>
+</MudPaper>
 
 <MudStack Spacing="1">
     <MudText Typo="Typo.h1"><b>h1:</b> Heading <TypographyDefaultDisplay Typography="@(new H1Typography())"/></MudText>
