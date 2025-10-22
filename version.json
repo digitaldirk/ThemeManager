@@ -7,7 +7,7 @@
     "^refs/heads/rel/\\d+\\.\\d+\\.\\d+",
     "^refs/tags/\\d+\\.\\d+\\.\\d+"
   ],
-  "nugetPackageVersion":{
+  "nugetPackageVersion": {
     "semVer": 2
   },
   "cloudBuild": {

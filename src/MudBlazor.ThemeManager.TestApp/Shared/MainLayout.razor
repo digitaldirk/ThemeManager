@@ -1,35 +1,39 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider @ref="@_mudThemeProvider" Theme="_themeManager" @bind-IsDarkMode="@_isDarkMode" />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider @ref="@_mudThemeProvider" Theme="_themeManager" @bind-IsDarkMode="@_isDarkMode"/>
+<MudPopoverProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar>
-        <MudTooltip  Text="@(_drawerOpen ? "Close Navigation" : "Open Navigation")">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        <MudTooltip Text="@(_drawerOpen ? "Close Navigation" : "Open Navigation")">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                           OnClick="@(e => DrawerToggle())"/>
         </MudTooltip>
         <MudTooltip Text="@(_isDarkMode ? "Light Mode" : "Dark Mode")">
-        <MudIconButton Icon="@(_isDarkMode ? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())"/>
+            <MudIconButton Icon="@(_isDarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)"
+                           Color="Color.Inherit" OnClick="@(e => DarkModeToggle())"/>
         </MudTooltip>
 
         <MudTooltip Text="GitHub">
-            <MudIconButton Href="https://github.com/MudBlazor/ThemeManager" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Edge="Edge.End" aria-label="Open GitHub repository"/>
+            <MudIconButton Href="https://github.com/MudBlazor/ThemeManager" Target="_blank"
+                           Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Edge="Edge.End"
+                           aria-label="Open GitHub repository"/>
         </MudTooltip>
         <MudSpacer/>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" >
+    <MudDrawer @bind-Open="_drawerOpen">
         <MudText Typo="Typo.h6" Class="px-4 pt-2">Theme Manager</MudText>
         <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Test Application</MudText>
-        <NavMenu />
+        <NavMenu/>
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="mt-4">
             @Body
         </MudContainer>
     </MudMainContent>
-    <MudThemeManager Theme="_themeManager" ThemeChanged="UpdateTheme" IsDarkMode="@_isDarkMode" />
+    <MudThemeManager Theme="_themeManager" ThemeChanged="UpdateTheme" IsDarkMode="@_isDarkMode"/>
 </MudLayout>
 
 @code {
@@ -63,6 +67,8 @@
             _isDarkMode = await _mudThemeProvider.GetSystemPreference();
             StateHasChanged();
         }
+
         await base.OnAfterRenderAsync(firstRender);
     }
+
 }

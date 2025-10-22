@@ -1,9 +1,5 @@
-using System;
-using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -11,8 +7,6 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 [GitHubActions(
@@ -32,27 +26,20 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     ImportSecrets = [nameof(NugetKey), nameof(GithubToken)])]
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-
-    public static int Main() => Execute<Build>(x => x.Compile);
-
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = Configuration.Release;
 
+    [Parameter] [Secret] readonly string GithubToken;
+    [GitRepository] readonly GitRepository GitRepository;
+
     [Parameter] readonly string NugetApiUrl = "https://api.nuget.org/v3/index.json"; //default
-    [Parameter][Secret] readonly string NugetKey;
-    [Parameter][Secret] readonly string GithubToken;
+    [Parameter] [Secret] readonly string NugetKey;
+
+    [Solution] readonly Solution Solution;
 
     bool RunFormatAnalyzers => false;
 
     bool IsTag => GitHubActions.Instance?.Ref?.StartsWith("refs/tags/") ?? false;
-
-    [Solution] readonly Solution Solution;
-    [GitRepository] readonly GitRepository GitRepository;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath TestsDirectory => RootDirectory / "tests";
@@ -60,13 +47,13 @@ class Build : NukeBuild
     AbsolutePath PackagesDirectory => ArtifactsDirectory / "packages";
 
     Target Clean => _ => _
-           .Before(Restore)
-           .Executes(() =>
-           {
-               SourceDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
-               TestsDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
-               ArtifactsDirectory.CreateOrCleanDirectory();
-           });
+        .Before(Restore)
+        .Executes(() =>
+        {
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
+            TestsDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
+            ArtifactsDirectory.CreateOrCleanDirectory();
+        });
 
     Target Restore => _ => _
         .Executes(() =>
@@ -84,10 +71,7 @@ class Build : NukeBuild
 
             DotNet($"format style {Solution.Path} --verify-no-changes ");
 
-            if (RunFormatAnalyzers)
-            {
-                DotNet($"format analyzers {Solution.Path} --verify-no-changes ");
-            }
+            if (RunFormatAnalyzers) DotNet($"format analyzers {Solution.Path} --verify-no-changes ");
         });
 
     Target Compile => _ => _
@@ -167,4 +151,11 @@ class Build : NukeBuild
         .SetConfiguration(Configuration)
         .SetNoBuild(SucceededTargets.Contains(Compile))
         .SetOutputDirectory(PackagesDirectory);
+
+    /// Support plugins are available for:
+    /// - JetBrains ReSharper        https://nuke.build/resharper
+    /// - JetBrains Rider            https://nuke.build/rider
+    /// - Microsoft VisualStudio     https://nuke.build/visualstudio
+    /// - Microsoft VSCode           https://nuke.build/vscode
+    public static int Main() => Execute<Build>(x => x.Compile);
 }
