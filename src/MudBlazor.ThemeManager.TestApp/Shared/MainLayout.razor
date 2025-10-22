@@ -7,9 +7,17 @@
 
 <MudLayout>
     <MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudIconButton Icon="@(_isDarkMode? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())" />
-        <MudSpacer />
+        <MudTooltip  Text="@(_drawerOpen ? "Close Navigation" : "Open Navigation")">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        </MudTooltip>
+        <MudTooltip Text="@(_isDarkMode ? "Light Mode" : "Dark Mode")">
+        <MudIconButton Icon="@(_isDarkMode ? @Icons.Material.Filled.LightMode : @Icons.Material.Filled.DarkMode)" Color="Color.Inherit" OnClick="@((e) => DarkModeToggle())"/>
+        </MudTooltip>
+
+        <MudTooltip Text="GitHub">
+            <MudIconButton Href="https://github.com/MudBlazor/ThemeManager" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Edge="Edge.End" aria-label="Open GitHub repository"/>
+        </MudTooltip>
+        <MudSpacer/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" >
         <MudText Typo="Typo.h6" Class="px-4 pt-2">Theme Manager</MudText>

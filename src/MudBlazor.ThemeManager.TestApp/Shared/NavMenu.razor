@@ -2,13 +2,13 @@
 
 <MudNavMenu Class="mt-4">
     <MudNavLink Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All" Href="/">Overview</MudNavLink>
-    <MudNavLink Icon="@Icons.Material.Filled.Storage" OnClick="NavigateOnlyToHome">Servers</MudNavLink>
-    <MudNavLink Icon="@Icons.Material.Filled.AccountBalance" OnClick="NavigateOnlyToHome" Disabled="true">Billing</MudNavLink>
-    <MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Icon="@Icons.Material.Filled.People" OnClick="NavigateOnlyToHome">Users</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Filled.Security" OnClick="NavigateOnlyToHome">Security</MudNavLink>
-    </MudNavGroup>
-    <MudNavLink OnClick="NavigateOnlyToHome">About</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.TextFields" Href="/Typography">Typography</MudNavLink>
+    <MudNavLink Icon="@Icons.Custom.Uncategorized.ColorPalette" Href="/Palette">Palette</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.CheckBoxOutlineBlank" Href="/Shadows">Shadows</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.AspectRatio" Href="/LayoutProperties">Layout Properties</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.AutoAwesomeMotion" Href="/ZIndex">Z Index</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.AccountBalance" Disabled="true">Disabled</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Filled.Help" Href="/About">About</MudNavLink>
 </MudNavMenu>
 
 @code {
